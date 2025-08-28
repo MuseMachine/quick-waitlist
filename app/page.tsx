@@ -15,7 +15,7 @@ export default function Home() {
   const date = process.env.NEXT_PUBLIC_LAUNCH_DATE || "2026-01-01";
   const title =
     process.env.NEXT_PUBLIC_TITLE ||
-    "Join the waitlist for the SAAS code library.";
+    "Join the waitlist for the MVP of MuseBoard";
   const description =
     process.env.NEXT_PUBLIC_OFFER_TITLE || "Add offer title from env";
 
