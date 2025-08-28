@@ -34,7 +34,7 @@ jobs:
           ###### End of Repository/Build Configurations ######
         env:
           NEXT_PUBLIC_RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          NEXT_PUBLIC_AUDIENCE_ID: ${{ secrtes.RESEND_AUDIENCE_ID }}
+          NEXT_PUBLIC_AUDIENCE_ID: ${{ secrets.RESEND_AUDIENCE_ID }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
