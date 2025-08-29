@@ -113,9 +113,9 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
           disabled={isPending}
           data-loading={isPending}
           type="submit"
-          className="group relative disabled:opacity-100 w-full"
+          className="group relative disabled:opacity-100 w-full bg-[#09cd9f] hover:bg-[#03b88e]"
         >
-          <span className="group-data-[loading=true]:text-transparent">
+          <span className="group-data-[loading=true]:text-transparent text-black">
             Join the waitlist
           </span>
           {isPending && (

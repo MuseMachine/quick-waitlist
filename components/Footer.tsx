@@ -1,8 +1,7 @@
-import { Github, Linkedin, X } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 import Link from "next/link";
 const LinkedinLink =
   process.env.NEXT_PUBLIC_LINKEDIN || "https://www.linkedin.com/";
-const TwitterLink = process.env.NEXT_PUBLIC_TWITTER || "https://www.x.com/";
 const GithubLink = process.env.NEXT_PUBLIC_GITHUB || "https://www.github.com/";
 
 const CardFooter = () => {

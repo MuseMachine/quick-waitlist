@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
-const inter = Inter({ subsets: ["latin"] });
+const dmSans = localFont({
+  src: "DMSans-VariableFont_opsz\,wght.ttf",
+});
 
 const siteName = process.env.NEXT_PUBLIC_SITE_NAME ?? "Quick Waitlist";
 const siteDescription =
@@ -22,8 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gradient-to-b from-[#fff6df]  to-[#FEFBF0]`}>
-        <main className="flex justify-center items-center min-h-screen">{children}</main>
+      <body className={`${dmSans.className}`}>
+        <main className="flex justify-center items-center min-h-screen">
+          {children}
+        </main>
         <Toaster />
       </body>
     </html>

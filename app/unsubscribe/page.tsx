@@ -14,7 +14,7 @@ const UnsubscribePage = () => {
             method: "POST",
             body: JSON.stringify(""),
             headers: { "Content-Type": "application/json" },
-          }
+          },
         );
 
         if (res.ok) {
@@ -40,7 +40,7 @@ const UnsubscribePage = () => {
 
           {/* form to unsubscribe */}
 
-          <button className="bg-black text-white px-2.5 py-1.5 rounded-md text-base transition-all duration-200 hover:bg-black/60">
+          <button className="bg-[#09cd9f] text-white px-2.5 py-1.5 rounded-md text-base transition-all duration-200 hover:bg-[#03b88e]">
             Unsubscribe
           </button>
         </div>

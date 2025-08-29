@@ -1,11 +1,9 @@
 import Card from "@/components/Card";
 import CardHeader from "@/components/Offer";
 import EmailForm from "@/components/EmailForm";
+import MMLogo from "@/components/Logo";
 
 export default function Home() {
-  const siteLogo =
-    process.env.NEXT_PUBLIC_LOGO ||
-    "https://res.cloudinary.com/dyv1yduua/image/upload/v1733392810/speaker_oiuezn.svg";
   // Data from env
   const features =
     process.env.NEXT_PUBLIC_FEATURES ||
@@ -16,18 +14,15 @@ export default function Home() {
   const title =
     process.env.NEXT_PUBLIC_TITLE ||
     "Join the waitlist for the MVP of MuseBoard";
-  const description =
-    process.env.NEXT_PUBLIC_OFFER_TITLE || "Add offer title from env";
+  const description = process.env.NEXT_PUBLIC_OFFER_TITLE || "";
 
   console.log(price);
   return (
     <div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={siteLogo}
-        alt="logo"
-        className="w-auto h-25 mx-auto object-contain mb-5"
-      />
+      <div className="w-1/4 h-25 mx-auto object-contain mb-5 text-[#09cd9f]">
+        <MMLogo />
+      </div>
       <Card>
         <div className="grid md:grid-cols-2 md:divide-x divide-[#F0E4D2]">
           <div className="md:order-1 order-2">
