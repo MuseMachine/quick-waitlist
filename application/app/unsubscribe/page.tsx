@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import React, { useTransition } from "react";
 
 const UnsubscribePage = () => {
@@ -30,25 +31,24 @@ const UnsubscribePage = () => {
   };
   return (
     <section className="w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-2">
-      <div className="max-w-screen-lg border-[1.5px] border-[#F0E4D2] mx-auto relative">
+      <div className="max-w-screen-lg mx-auto relative">
         <div className="flex flex-col items-center p-4 md:p-12">
           <div className="text-center mb-4 lg:mb-6">
             <h1 className="text-3xl md:text-[55px] font-semibold leading-none md:leading-tight">
-              Sorry to see you go!
+              We are sorry to see you go
             </h1>
+            <p className="text-3xl md:text-sm font-semibold leading-none md:leading-tight">
+              Please click the unsubscribe button to recieve a confirmation
+              e-mail.
+            </p>
           </div>
 
           {/* form to unsubscribe */}
 
-          <button className="bg-[#09cd9f] text-white px-2.5 py-1.5 rounded-md text-base transition-all duration-200 hover:bg-[#03b88e]">
+          <Button className="bg-[#09cd9f] text-black font-bold px-2.5 py-1.5 rounded-full text-base transition-all duration-200 hover:bg-[#03b88e]">
             Unsubscribe
-          </button>
+          </Button>
         </div>
-        {/* element */}
-        <span className="w-2 h-2 absolute z-10 -top-[1%] -left-[0.5%] block bg-white border border-[#F0E4D2]"></span>
-        <span className="w-2 h-2 absolute z-10 -bottom-[1%] -left-[0.5%] block bg-white border border-[#F0E4D2]"></span>
-        <span className="w-2 h-2 absolute z-10 -top-[1%] -right-[0.5%] block bg-white border border-[#F0E4D2]"></span>
-        <span className="w-2 h-2 absolute z-10 -bottom-[1%] -right-[0.5%] block bg-white border border-[#F0E4D2]"></span>
       </div>
     </section>
   );

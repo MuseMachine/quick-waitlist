@@ -1,6 +1,7 @@
 "use client";
 import React, { useId, useTransition } from "react";
 import toast from "react-hot-toast";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -131,6 +132,12 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
             </div>
           )}
         </Button>
+        <Link
+          href="/unsubscribe"
+          className="flex underline transition-all duration-200 hover:text-white/90 text-[#B1ACA4] justify-end content-start"
+        >
+          unsubscribe
+        </Link>
       </form>
       {/*<CardFooter />*/}
     </div>

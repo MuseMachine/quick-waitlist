@@ -74,14 +74,14 @@ export default function Home() {
           <Link
             href="https://musemachine.ai/en/legal-disclosure"
             target="_blank"
-            className="underline transition-all duration-200 hover:text-black/70"
+            className="underline transition-all duration-200 hover:text-white/90"
           >
             legal disclosure
           </Link>{" "}
           <Link
             href="https://musemachine.ai/en/privacy-policy"
             target="_blank"
-            className="underline transition-all duration-200 hover:text-black/70"
+            className="underline transition-all duration-200 hover:text-white/90"
           >
             privacy policy
           </Link>
