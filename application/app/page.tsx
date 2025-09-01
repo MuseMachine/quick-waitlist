@@ -1,3 +1,4 @@
+"use client";
 import Card from "@/components/Card";
 import Link from "next/link";
 import { Github, Linkedin } from "lucide-react";

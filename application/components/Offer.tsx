@@ -1,8 +1,6 @@
 import { Cog } from "lucide-react";
-import CardFooter from "./Footer";
 
 const CardHeader = ({
-  title,
   features,
   // price,
   // discount,
@@ -16,8 +14,8 @@ const CardHeader = ({
     <div className="p-5 divide-y divide-[#F0E4D2]">
       <div className="space-y-6 pb-5">
         <div className="space-y-3">
-          {features.split(",").map((feature, index) => (
-            <div key={index} className="flex items-center gap-3">
+          {features.split(",").map((feature) => (
+            <div key={feature} className="flex items-center gap-3 text-2xl">
               <Cog className="w-5 h-5 text-[#09cd9f]" />
               <span>{feature.trim()}</span>
             </div>

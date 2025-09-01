@@ -70,7 +70,10 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
     <div className="p-5 space-y-8 flex flex-col justify-center">
       <div className="space-y-3">
         {/* <div className="text-orange-500 font-medium">Limited Time Offer</div> */}
-        <span className="text-green-600 bg-green-100 px-2 py-1 rounded-full text-sm items-center flex gap-1 w-fit">
+        <span
+          suppressHydrationWarning={true}
+          className="text-green-600 bg-green-100 px-2 py-1 rounded-full text-sm items-center flex gap-1 w-fit"
+        >
           <Hourglass size={14} strokeWidth={2} aria-hidden="true" />
           {getDaysLeft()} days left
         </span>
