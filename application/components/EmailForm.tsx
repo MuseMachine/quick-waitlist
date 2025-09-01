@@ -1,13 +1,16 @@
 "use client";
-import React, { useTransition } from "react";
+import React, { useId, useTransition } from "react";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Hourglass, LoaderCircle, Mail, User } from "lucide-react";
+import { Hourglass, LoaderCircle } from "lucide-react";
 import { useState } from "react";
+// import CardFooter from "./Footer";
 
 const EmailForm = ({ date, title }: { date: string; title: string }) => {
+  const nameId = useId();
+  const emailId = useId();
   const [isPending, startTransaction] = useTransition();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -67,7 +70,7 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
     <div className="p-5 space-y-8 flex flex-col justify-center">
       <div className="space-y-3">
         {/* <div className="text-orange-500 font-medium">Limited Time Offer</div> */}
-        <span className="text-green-600 bg-green-100 px-2 py-1 rounded text-sm items-center flex gap-1 w-fit">
+        <span className="text-green-600 bg-green-100 px-2 py-1 rounded-full text-sm items-center flex gap-1 w-fit">
           <Hourglass size={14} strokeWidth={2} aria-hidden="true" />
           {getDaysLeft()} days left
         </span>
@@ -83,13 +86,11 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
             <Input
               type="text"
               name="name"
-              id="name"
+              id={nameId}
               required
-              placeholder="Full name..."
+              placeholder="John Doe"
+              className="rounded-full"
             />
-            <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50">
-              <User size={16} strokeWidth={2} aria-hidden="true" />
-            </div>
           </div>
         </div>
         <div>
@@ -98,13 +99,11 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
             <Input
               type="email"
               name="email"
-              id="email"
+              id={emailId}
               required
-              placeholder="Email Address..."
+              placeholder="John.Doe@musemachine.de"
+              className="rounded-full"
             />
-            <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50">
-              <Mail size={16} strokeWidth={2} aria-hidden="true" />
-            </div>
           </div>
         </div>
 
@@ -113,9 +112,9 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
           disabled={isPending}
           data-loading={isPending}
           type="submit"
-          className="group relative disabled:opacity-100 w-full bg-[#09cd9f] hover:bg-[#03b88e]"
+          className="group relative disabled:opacity-100 w-full bg-[#09cd9f] hover:bg-[#03b88e] rounded-full"
         >
-          <span className="group-data-[loading=true]:text-transparent text-black">
+          <span className="group-data-[loading=true]:text-transparent text-black font-bold">
             Join the waitlist
           </span>
           {isPending && (
@@ -130,6 +129,7 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
           )}
         </Button>
       </form>
+      {/*<CardFooter />*/}
     </div>
   );
 };
