@@ -1,27 +1,50 @@
 "use client";
 import React, { useId, useTransition } from "react";
 import toast from "react-hot-toast";
-import Link from "next/link";
+// import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Hourglass, LoaderCircle } from "lucide-react";
 import { useState } from "react";
-// import CardFooter from "./Footer";
 
 const EmailForm = ({ date, title }: { date: string; title: string }) => {
   const nameId = useId();
   const emailId = useId();
+  const checkboxId = useId();
   const [isPending, startTransaction] = useTransition();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const handleClick = () => {
     setIsLoading(true);
     // Simulate an async operation
     setTimeout(() => {
       setIsLoading(false);
     }, 1000); // Reset after 1 second
+  };
+  // Cleverreach test
+  const handleCleverreach = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    const target = event.target as HTMLFormElement;
+    console.log("target", target);
+    console.log("Test handle Cleverreach");
+    const form = new FormData(target);
+    const email = form.get("email");
+    startTransaction(async () => {
+      try {
+        const res = await fetch("/api/cleverreach", {
+          method: "POST",
+          body: JSON.stringify({ email }),
+        });
+        if (res.ok) {
+          console.log(res.status);
+          const body = await res.json();
+          console.log(body);
+        }
+      } catch (error) {
+        console.log("meh:", error);
+      }
+    });
   };
 
   function getDaysLeft(): number {
@@ -31,27 +54,28 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return Math.max(0, diffDays);
   }
-
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as HTMLFormElement;
+    console.log("target", target);
     const form = new FormData(target);
     const email = form.get("email");
-    const fullName = form.get("name") as string;
-
-    if (!email || !fullName) {
+    const name = form.get("name") as string;
+    const checkBoxState = form.get("checkbox") as string;
+    if (!email || !name || !checkBoxState) {
       return null;
     }
 
     // Split full name into first and last name
-    const [firstName, ...lastNameParts] = fullName.trim().split(" ");
-    const lastName = lastNameParts.join(" ") || ""; // Join remaining parts or empty string
+    // const [firstName, ...lastNameParts] = fullName.trim().split(" ");
+    // const lastName = lastNameParts.join(" ") || ""; // Join remaining parts or empty string
 
     startTransaction(async () => {
       try {
-        const res = await fetch("/api/resend", {
+        console.log("Sending data");
+        const res = await fetch("/api/maileroo", {
           method: "POST",
-          body: JSON.stringify({ email, firstName, lastName }),
+          body: JSON.stringify({ name, email }),
           headers: { "Content-Type": "application/json" },
         });
 
@@ -110,13 +134,32 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
             />
           </div>
         </div>
-
+        <div className="flex gap-2">
+          <Input
+            name="checkbox"
+            id={checkboxId}
+            type="checkbox"
+            className="size-3 content-between"
+            required
+          />
+          <Label>
+            I&apos;ve read the{" "}
+            <a
+              href="https://musemachine.ai/en/privacy-policy"
+              className="underline"
+            >
+              privacy policy&nbsp;
+            </a>
+            and agree that my email address will be stored and processed for the
+            purpose of maintaining the waiting list.
+          </Label>
+        </div>
         <Button
           onClick={handleClick}
           disabled={isPending}
           data-loading={isPending}
           type="submit"
-          className="group relative disabled:opacity-100 w-full bg-[#09cd9f] hover:bg-[#03b88e] rounded-full"
+          className="group relative disabled:opacity-100 w-full rounded-full"
         >
           <span className="group-data-[loading=true]:text-transparent text-black font-bold">
             Join the waitlist
@@ -132,14 +175,7 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
             </div>
           )}
         </Button>
-        <Link
-          href="/unsubscribe"
-          className="flex underline transition-all duration-200 hover:text-white/90 text-[#B1ACA4] justify-end content-start"
-        >
-          unsubscribe
-        </Link>
       </form>
-      {/*<CardFooter />*/}
     </div>
   );
 };

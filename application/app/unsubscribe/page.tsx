@@ -2,10 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import React, { useTransition } from "react";
+// import { useSearchParams } from "next/navigation";
 
 const UnsubscribePage = () => {
   const [isPending, startTransaction] = useTransition();
-
+  // const searchParams = useSearchParams();
+  // const email = searchParams.get("email");
+  // console.log("email:", email);
   const handleSubmit = () => {
     startTransaction(async () => {
       try {
@@ -45,7 +48,10 @@ const UnsubscribePage = () => {
 
           {/* form to unsubscribe */}
 
-          <Button className="bg-[#09cd9f] text-black font-bold px-2.5 py-1.5 rounded-full text-base transition-all duration-200 hover:bg-[#03b88e]">
+          <Button
+            onClick={handleSubmit}
+            className="bg-[#09cd9f] text-black font-bold px-2.5 py-1.5 rounded-full text-base transition-all duration-200 hover:bg-[#03b88e]"
+          >
             Unsubscribe
           </Button>
         </div>

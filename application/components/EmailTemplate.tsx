@@ -10,24 +10,18 @@ import {
 } from "@react-email/components";
 
 export const EmailTemplate = () => {
-  const siteLogo = process.env.NEXT_PUBLIC_DOMAIN + "/speaker.svg";
+  const siteLogo = process.env.NEXT_PUBLIC_DOMAIN + "/mm_logo.svg";
   return (
     <Html>
       <Head />
       <Preview>{`You’re on the waitlist for ${process.env.NEXT_PUBLIC_SITE_NAME}`}</Preview>
       <Body style={main}>
         <Container style={container}>
-          <Img
-            style={img}
-            src={process.env.NEXT_PUBLIC_LOGO || siteLogo}
-            width="100"
-            height="100"
-            alt="Logo"
-          />
+          <Img style={img} src={siteLogo} width="400" height="200" alt="Logo" />
           <Section>
             <Text
               style={text}
-            >{`Big welcome and thanks for subscribing ${process.env.NEXT_PUBLIC_SITE_NAME}`}</Text>
+            >{`Thank you for subscribing ${process.env.NEXT_PUBLIC_SITE_NAME}`}</Text>
             <Text style={text}>
               🚀 The mission is to send out a stylish and simple newsletter that
               help busy creatives to stay updated without cluttering their
