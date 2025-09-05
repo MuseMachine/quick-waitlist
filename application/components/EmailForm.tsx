@@ -67,21 +67,22 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
     }
 
     // Split full name into first and last name
-    // const [firstName, ...lastNameParts] = fullName.trim().split(" ");
-    // const lastName = lastNameParts.join(" ") || ""; // Join remaining parts or empty string
+    const [firstName, ...lastNameParts] = name.trim().split(" ");
+    const lastName = lastNameParts.join(" ") || ""; // Join remaining parts or empty string
 
     startTransaction(async () => {
       try {
         console.log("Sending data");
-        const res = await fetch("/api/maileroo", {
+        const res = await fetch("/api/subscribe", {
           method: "POST",
-          body: JSON.stringify({ name, email }),
+          body: JSON.stringify({ firstName, lastName, email }),
           headers: { "Content-Type": "application/json" },
         });
 
         if (res.ok) {
           target.reset();
           toast.success("Thank you for subscribing 🎉");
+          console.log(await res.json());
         } else {
           console.error("Error:", res.status, res.statusText);
           toast.error("Something went wrong");

@@ -10,29 +10,21 @@ import {
 } from "@react-email/components";
 import { EmailFooter } from "./EmailFooter";
 
-export const EmailTemplate = () => {
+export const EmailConfirmation = (confirmationLink: string) => {
   const siteLogo = process.env.NEXT_PUBLIC_DOMAIN + "/mm_logo.svg";
   return (
     <Html>
       <Head />
-      <Preview>{`You’re on the waitlist for ${process.env.NEXT_PUBLIC_SITE_NAME}`}</Preview>
+      <Preview>{`Please confirm your Subscription`}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Img style={img} src={siteLogo} width="400" height="200" alt="Logo" />
           <Section>
-            <Text
-              style={text}
-            >{`Thank you for subscribing ${process.env.NEXT_PUBLIC_SITE_NAME}`}</Text>
-            <Text style={text}>
-              🚀 The mission is to send out a stylish and simple newsletter that
-              help busy creatives to stay updated without cluttering their
-              inbox.
-            </Text>
-            <Text style={text}>
-              🛳 All new AI resources and tools are carefully curated, with only
-              a handful of the best being shipped.
-            </Text>
-            <Text style={text}>Expect a new shipment every Tuesday!</Text>
+            <Text style={text}>{`Please click`}</Text>
+            <a style={anchor} href={confirmationLink}>
+              here
+            </a>
+            <Text style={text}>{`to confirm your subscription`}</Text>
           </Section>
         </Container>
       </Body>

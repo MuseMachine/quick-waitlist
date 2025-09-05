@@ -2,6 +2,7 @@ import React from "react";
 
 const MMLogo = () => (
   <svg viewBox="0 0 183 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <title>MuseMachine logo</title>
     <circle
       cx="8"
       cy="8.78418"
