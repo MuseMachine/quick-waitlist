@@ -1,48 +1,45 @@
-import { Section, Img, Text, Row, Column, Link } from "@react-email/components";
-import { LinkedinIcon } from "lucide-react";
-import MMLogo from "./Logo";
+import { Section, Text } from "@react-email/components";
+// import { LinkedinIcon } from "lucide-react";
+// import MMLogo from "./Logo";
 
 export const EmailFooter = () => {
   return (
-    <Section className="text-center">
-      <table className="w-full">
-        <tr className="w-full">
-          <td align="center">
+    <Section>
+      <table style={footerBox}>
+        {/*<tr>
+          <td>
             <MMLogo />
           </td>
-        </tr>
-        <tr className="w-full">
-          <td align="center">
-            <Text className="my-[8px] font-semibold text-[16px] text-gray-900 leading-[24px]">
-              MuseMachine UG
-            </Text>
-            <Text className="mt-[4px] mb-0 text-[16px] text-gray-500 leading-[24px]">
-              Unleach your creativity
-            </Text>
-          </td>
-        </tr>
+        </tr>*/}
         <tr>
-          <td align="center">
-            <Row className="table-cell h-[44px] w-[56px] align-bottom">
-              <Column className="pr-[8px]">
-                <Link href="https://www.linkedin.com/company/musemachine-ai/">
-                  <LinkedinIcon />
-                </Link>
-              </Column>
-            </Row>
+          <td>
+            <Text>MuseMachine UG・Roehrer Weg 8・71032 Boeblingen Germany</Text>
+            <Text style={homepage}>www.musemachine.ai</Text>
           </td>
         </tr>
-        <tr>
-          <td align="center">
-            <Text className="my-[8px] font-semibold text-[16px] text-gray-500 leading-[24px]">
-              Roehrer Weg 8, 71032 Boeblingen Germany
-            </Text>
-            <Text className="mt-[4px] mb-0 font-semibold text-[16px] text-gray-500 leading-[24px]">
-              contact@musemachine.de
-            </Text>
+        {/*<tr style={socialMediaIcons}>
+          <td>
+            <Link href="https://www.linkedin.com/company/musemachine-ai/">
+              <LinkedinIcon />
+            </Link>
           </td>
-        </tr>
+        </tr>*/}
       </table>
     </Section>
   );
+};
+
+const footerBox = {
+  display: "flex",
+  justifyContent: "center",
+};
+
+// const socialMediaIcons = {
+//   justifySelf: "center",
+// };
+
+const homepage = {
+  display: "flex",
+  justifyContent: "center",
+  color: "#09cd9f",
 };
