@@ -1,8 +1,8 @@
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
 import MMLogo from "@/components/Logo";
+import { Button } from "@/components/ui/button";
 
 const PrivacyPolicyPage = () => {
   return (

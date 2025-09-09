@@ -1,8 +1,8 @@
-import { Suspense } from "react";
-import Link from "next/link";
 import { Github, Linkedin } from "lucide-react";
-import MMLogo from "@/components/Logo";
+import Link from "next/link";
+import { Suspense } from "react";
 import ConfirmationUI from "@/components/Confirmation";
+import MMLogo from "@/components/Logo";
 
 const LinkedinLink =
   process.env.NEXT_PUBLIC_LINKEDIN || "https://www.linkedin.com/";

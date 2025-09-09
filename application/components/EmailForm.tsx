@@ -1,11 +1,11 @@
 "use client";
-import React, { useId, useTransition } from "react";
+import { Hourglass, LoaderCircle } from "lucide-react";
+import type React from "react";
+import { useId, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Hourglass, LoaderCircle } from "lucide-react";
-import { useState } from "react";
 
 const EmailForm = ({ date, title }: { date: string; title: string }) => {
   const nameId = useId();

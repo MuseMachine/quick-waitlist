@@ -1,6 +1,6 @@
-import { decrypt, encrypt } from "@/app/lib/crypto";
 import { NextResponse } from "next/server";
-import { Resend, ErrorResponse } from "resend";
+import { ErrorResponse, Resend } from "resend";
+import { decrypt, encrypt } from "@/app/lib/crypto";
 import { WelcomeEmail } from "@/emails/WelcomeEmail";
 
 const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);

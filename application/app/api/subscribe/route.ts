@@ -1,5 +1,5 @@
+import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { NextRequest, NextResponse } from "next/server";
 import { encrypt } from "@/app/lib/crypto";
 import { EmailConfirmation } from "@/emails/Confirmation";
 

@@ -4,7 +4,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
 const dmSans = localFont({
-  src: "DMSans-VariableFont_opsz\,wght.ttf",
+  src: "DMSans-VariableFont_opsz,wght.ttf",
 });
 
 const siteName = process.env.NEXT_PUBLIC_SITE_NAME ?? "Quick Waitlist";

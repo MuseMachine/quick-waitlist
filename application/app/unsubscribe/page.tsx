@@ -1,6 +1,5 @@
-import { Suspense } from "react";
 import Link from "next/link";
-import { Github, Linkedin } from "lucide-react";
+import { Suspense } from "react";
 import MMLogo from "@/components/Logo";
 import UnsubscribeUI from "@/components/Unsubscribe";
 

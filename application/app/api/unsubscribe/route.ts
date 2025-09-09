@@ -1,5 +1,5 @@
+import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { NextRequest, NextResponse } from "next/server";
 import { decrypt } from "@/app/lib/crypto"; // Deine Krypto-Funktionen
 
 const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);

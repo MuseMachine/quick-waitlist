@@ -1,10 +1,10 @@
 "use client";
-import Card from "@/components/Card";
-import Link from "next/link";
 import { Github, Linkedin } from "lucide-react";
-import CardHeader from "@/components/Offer";
+import Link from "next/link";
+import Card from "@/components/Card";
 import EmailForm from "@/components/EmailForm";
 import MMLogo from "@/components/Logo";
+import CardHeader from "@/components/Offer";
 
 const LinkedinLink =
   process.env.NEXT_PUBLIC_LINKEDIN || "https://www.linkedin.com/";
