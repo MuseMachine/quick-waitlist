@@ -8,7 +8,7 @@ import {
   Section,
   Text,
 } from "@react-email/components";
-import { EmailFooter } from "./EmailFooter";
+import { EmailFooter } from "@/components/EmailFooter";
 
 export const EmailConfirmation = (confirmationLink: string) => {
   const siteLogo = process.env.NEXT_PUBLIC_DOMAIN + "/mm_logo.svg";

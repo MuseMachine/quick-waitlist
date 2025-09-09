@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 import { encrypt } from "@/app/lib/crypto";
-import { EmailConfirmation } from "@/components/EmailConfirmation";
+import { EmailConfirmation } from "@/emails/Confirmation";
 
 const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
 const fromEmail = process.env.NEXT_PUBLIC_FROM_EMAIL; // needed! Else e-mail won't be send

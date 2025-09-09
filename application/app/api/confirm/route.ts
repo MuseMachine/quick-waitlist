@@ -1,9 +1,12 @@
-import { decrypt } from "@/app/lib/crypto";
+import { decrypt, encrypt } from "@/app/lib/crypto";
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { Resend, ErrorResponse } from "resend";
+import { WelcomeEmail } from "@/emails/WelcomeEmail";
 
 const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
 const audienceId = process.env.NEXT_PUBLIC_AUDIENCE_ID || "";
+const siteUrl = process.env.NEXT_PUBLIC_DOMAIN;
+const fromEmail = process.env.NEXT_PUBLIC_FROM_EMAIL;
 
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
@@ -29,12 +32,36 @@ export async function GET(request: Request) {
 	// 	audienceId,
 	// });
 
-	// Update user status in Resend audience to subscribed using the email
-	await resend.contacts.update({
-		email,
-		unsubscribed: false,
-		audienceId: audienceId,
-	});
+	try {
+		// Update user status in Resend audience to subscribed using the email
+		const updateContact = await resend.contacts.update({
+			email,
+			unsubscribed: false,
+			audienceId: audienceId,
+		});
+		if (updateContact.error !== null) {
+			const resErrorMessage = updateContact.error.message;
+			return NextResponse.json({ resErrorMessage });
+		}
+
+		// For the welcome email we also need an unsubscribe link.
+		// Generate a token with encrypted email. Without timestamp, because:
+		// GDPR (conditions for consent and right to object)
+		const token = encrypt(email);
+		const unsubscribeLink = `${siteUrl}/unsubscribe?token=${encodeURIComponent(token)}`;
+		const sendEmail = await resend.emails.send({
+			from: fromEmail as string,
+			to: email,
+			subject: "Welcome",
+			react: WelcomeEmail(unsubscribeLink),
+		});
+		if (sendEmail.error !== null) {
+			const resErrorMessage = sendEmail.error.message;
+			return NextResponse.json({ resErrorMessage });
+		}
+	} catch (error) {
+		return NextResponse.json({ error });
+	}
 
 	return NextResponse.json({ message: "Email confirmed successfully" });
 }
