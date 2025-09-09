@@ -1,7 +1,6 @@
 "use client";
 import React, { useId, useTransition } from "react";
 import toast from "react-hot-toast";
-// import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,30 +20,6 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
     setTimeout(() => {
       setIsLoading(false);
     }, 1000); // Reset after 1 second
-  };
-  // Cleverreach test
-  const handleCleverreach = async (event: React.SyntheticEvent) => {
-    event.preventDefault();
-    const target = event.target as HTMLFormElement;
-    console.log("target", target);
-    console.log("Test handle Cleverreach");
-    const form = new FormData(target);
-    const email = form.get("email");
-    startTransaction(async () => {
-      try {
-        const res = await fetch("/api/cleverreach", {
-          method: "POST",
-          body: JSON.stringify({ email }),
-        });
-        if (res.ok) {
-          console.log(res.status);
-          const body = await res.json();
-          console.log(body);
-        }
-      } catch (error) {
-        console.log("meh:", error);
-      }
-    });
   };
 
   function getDaysLeft(): number {
