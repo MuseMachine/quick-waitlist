@@ -39,8 +39,16 @@ jobs:
           output_location: "" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
         env:
-          NEXT_PUBLIC_RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          NEXT_PUBLIC_AUDIENCE_ID: ${{ secrets.RESEND_AUDIENCE_ID }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          AUDIENCE_ID: ${{ secrets.RESEND_AUDIENCE_ID }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          NEXT_PUBLIC_DOMAIN: ${{ secrets.NEXT_PUBLIC_DOMAIN }}
+          NEXT_PUBLIC_FEATURES: ${{ secrets.NEXT_PUBLIC_FEATURES }}
+          NEXT_PUBLIC_GITHUB: ${{ secrets.NEXT_PUBLIC_GITHUB }}
+          NEXT_PUBLIC_LAUNCH_DATE: ${{ secrets.NEXT_PUBLIC_LAUNCH_DATE }}
+          NEXT_PUBLIC_LINKEDIN: ${{ secrets.NEXT_PUBLIC_LINKEDIN }}
+          NEXT_PUBLIC_TITLE: ${{ secrets.NEXT_PUBLIC_TITLE }}
+          PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
