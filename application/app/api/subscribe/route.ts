@@ -51,6 +51,9 @@ export async function POST(req: NextRequest) {
 			addContact,
 		});
 	} catch (error) {
-		return NextResponse.json({ error }, { status: 500 });
+		return NextResponse.json(
+			{ error: "Something went wrong. Sorry!" },
+			{ status: 500 },
+		);
 	}
 }
