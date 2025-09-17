@@ -33,7 +33,6 @@ To run on local Quick Waitlist for your project, please follow these steps:
    ```
 
 3. Configure environment variables:
-
    - Duplicate `.env.example` to `.env.local`:
      ```sh
      cp .env.example .env.local
@@ -47,7 +46,7 @@ To run on local Quick Waitlist for your project, please follow these steps:
       NEXT_PUBLIC_SITE_DESCRIPTION=
       NEXT_PUBLIC_DOMAIN=
       NEXT_PUBLIC_LOGO_UR=<Logo URL>
-      NEXT_PUBLIC_FROM_EMAIL=
+      FROM_EMAIL=
 
       NEXT_PUBLIC_LINKEDIN=
       NEXT_PUBLIC_TWITTER=

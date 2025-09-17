@@ -3,9 +3,9 @@ import { Resend } from "resend";
 import { encrypt } from "@/app/lib/crypto";
 import { EmailConfirmation } from "@/emails/Confirmation";
 
-const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
-const fromEmail = process.env.NEXT_PUBLIC_FROM_EMAIL || undefined; // needed! Else e-mail won't be send
-const audienceId = process.env.NEXT_PUBLIC_AUDIENCE_ID || undefined;
+const resend = new Resend(process.env.RESEND_API_KEY);
+const fromEmail = process.env.FROM_EMAIL || undefined; // needed! Else e-mail won't be send
+const audienceId = process.env.AUDIENCE_ID || undefined;
 const siteUrl = process.env.NEXT_PUBLIC_DOMAIN || undefined;
 const subject = "Confirm your subscription";
 
@@ -15,14 +15,6 @@ export async function POST(req: NextRequest) {
 	}
 	const body = await req.json();
 	try {
-		const addContact = await resend.contacts.create({
-			email: body.email,
-			firstName: body.firstName,
-			lastName: body.lastName,
-			unsubscribed: true,
-			audienceId: audienceId as string,
-		});
-
 		// Generate a token with encrypted email and timestamp
 		const tokenData = `${body.email}:${Date.now()}`;
 		const token = encrypt(tokenData);
@@ -34,6 +26,14 @@ export async function POST(req: NextRequest) {
 			to: [body.email],
 			subject: subject,
 			react: EmailConfirmation(confirmationLink),
+		});
+
+		const addContact = await resend.contacts.create({
+			email: body.email,
+			firstName: body.firstName,
+			lastName: body.lastName,
+			unsubscribed: true,
+			audienceId: audienceId as string,
 		});
 
 		return NextResponse.json({

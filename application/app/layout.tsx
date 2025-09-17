@@ -7,10 +7,9 @@ const dmSans = localFont({
   src: "DMSans-VariableFont_opsz,wght.ttf",
 });
 
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME ?? "Quick Waitlist";
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME ?? "MuseBoard Waitlist";
 const siteDescription =
-  process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
-  "Quick Waitlist and coming soon page for your SAAS and website.";
+  process.env.NEXT_PUBLIC_SITE_DESCRIPTION ?? "Waitlist for MuseBoard";
 
 export const metadata: Metadata = {
   title: siteName,

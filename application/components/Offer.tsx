@@ -1,15 +1,6 @@
 import { Cog } from "lucide-react";
 
-const CardHeader = ({
-  features,
-  // price,
-  // discount,
-}: {
-  title: string;
-  features: string;
-  price: string;
-  discount: string;
-}) => {
+const CardHeader = ({ features }: { title: string; features: string }) => {
   return (
     <div className="p-5 divide-y divide-[#F0E4D2]">
       <div className="space-y-6 pb-5">

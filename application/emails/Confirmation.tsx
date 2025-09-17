@@ -20,11 +20,13 @@ export const EmailConfirmation = (confirmationLink: string) => {
         <Container style={container}>
           <Img style={img} src={siteLogo} width="400" height="200" alt="Logo" />
           <Section>
-            <Text style={text}>{`Please click`}</Text>
-            <a style={anchor} href={confirmationLink}>
-              here
-            </a>
-            <Text style={text}>{`to confirm your subscription`}</Text>
+            <Text style={text}>
+              Please click{" "}
+              <a style={anchor} href={confirmationLink}>
+                here
+              </a>
+              to confirm your subscription
+            </Text>
           </Section>
         </Container>
       </Body>

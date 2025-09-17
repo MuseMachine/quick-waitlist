@@ -3,9 +3,9 @@ import { Resend } from "resend";
 import { decrypt, encrypt } from "@/app/lib/crypto";
 import { WelcomeEmail } from "@/emails/WelcomeEmail";
 
-const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
-const fromEmail = process.env.NEXT_PUBLIC_FROM_EMAIL || undefined; // needed! Else e-mail won't be send
-const audienceId = process.env.NEXT_PUBLIC_AUDIENCE_ID || undefined;
+const resend = new Resend(process.env.RESEND_API_KEY);
+const fromEmail = process.env.FROM_EMAIL || undefined; // needed! Else e-mail won't be send
+const audienceId = process.env.AUDIENCE_ID || undefined;
 const siteUrl = process.env.NEXT_PUBLIC_DOMAIN || undefined;
 
 export async function GET(request: Request) {

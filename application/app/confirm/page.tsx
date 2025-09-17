@@ -11,7 +11,7 @@ const GithubLink = process.env.NEXT_PUBLIC_GITHUB || "https://www.github.com/";
 export default function ConfirmPage() {
   return (
     <div>
-      <div className="mx-auto object-contain mb-11 text-[#09cd9f]">
+      <div className="mx-auto max-w-80 min-w-80 object-contain mb-11 text-[#09cd9f]">
         <MMLogo />
       </div>
       <div className="grid md:grid-cols-2">

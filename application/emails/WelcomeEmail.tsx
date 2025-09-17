@@ -15,11 +15,12 @@ import { EmailFooter } from "@/components/EmailFooter";
 
 export const WelcomeEmail = (unsubscribeLink: string) => {
   const siteName = "MuseBoard";
-  const contactEmail = "contact@musemachine.de";
-  const siteUrl = process.env.NEXT_PUBLIC_DOMAIN;
+  const contactEmail = "info@updates.musemachine.ai";
   const siteLogo =
     process.env.NEXT_PUBLIC_DOMAIN + "/mm_logo.svg" ||
     "http://localhost:3000/mm_logo.svg";
+  const waitlistpage =
+    process.env.NEXT_PUBLIC_DOMAIN || "http://localhost:3000";
   return (
     <Html>
       <Head />
@@ -65,7 +66,11 @@ export const WelcomeEmail = (unsubscribeLink: string) => {
             </Text>
             <Hr style={hr} />
             <Text style={unsubscribeText}>
-              You are receiving this email because you opted in via our site.
+              You are receiving this email because you opted in via our
+              <a style={anchor} href={waitlistpage}>
+                waitlist
+              </a>
+              .
             </Text>
             <Text style={unsubscribeText}>
               Want to change how you receive these emails? <br />

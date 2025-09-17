@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 
 const algorithm = "aes-256-cbc";
-const secretPassphrase = process.env.NEXT_SECRET_PASSPHRASE || "";
+const secretPassphrase = process.env.PASSPHRASE || "";
 
 // Errors are due to typescript types not matching correctly with the node:crypto package.
 // Ignore them. It works in runtime.

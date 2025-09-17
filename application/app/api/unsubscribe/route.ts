@@ -2,8 +2,8 @@ import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { decrypt } from "@/app/lib/crypto"; // Deine Krypto-Funktionen
 
-const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
-const audienceId = process.env.NEXT_PUBLIC_AUDIENCE_ID || undefined;
+const resend = new Resend(process.env.RESEND_API_KEY);
+const audienceId = process.env.AUDIENCE_ID || undefined;
 
 export async function GET(request: NextRequest) {
 	if (!audienceId) {
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 
 	try {
 		const decryptedData = decrypt(token);
-		const { email } = JSON.parse(decryptedData);
+		const email = decryptedData;
 
 		if (!email) {
 			throw new Error("Invalid token payload.");

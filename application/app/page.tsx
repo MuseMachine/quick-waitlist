@@ -15,8 +15,6 @@ export default function Home() {
   const features =
     process.env.NEXT_PUBLIC_FEATURES ||
     "Sectoral templates, Sectoral templates, Sectoral templates";
-  const price = process.env.NEXT_PUBLIC_CURRENT_PRICE || "";
-  const discountPrice = process.env.NEXT_PUBLIC_DISCOUNT_PRICE || "";
   const date = process.env.NEXT_PUBLIC_LAUNCH_DATE || "2026-01-01";
   const title =
     process.env.NEXT_PUBLIC_TITLE ||
@@ -32,12 +30,7 @@ export default function Home() {
       <Card>
         <div className="grid md:grid-cols-2">
           <div className="md:order-1 order-2 content-center">
-            <CardHeader
-              title={description}
-              features={features}
-              price={price}
-              discount={discountPrice}
-            />
+            <CardHeader title={description} features={features} />
           </div>
           <div className="md:order-2 order-1">
             <EmailForm date={date} title={title} />

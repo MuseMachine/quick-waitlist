@@ -6,7 +6,7 @@ import UnsubscribeUI from "@/components/Unsubscribe";
 export default function UnsubscribePage() {
   return (
     <div>
-      <div className="mx-auto object-contain mb-11 text-[#09cd9f]">
+      <div className="mx-auto max-w-80 min-w-80 object-contain mb-11 text-[#09cd9f]">
         <MMLogo />
       </div>
       <div className="grid md:grid-cols-2">
