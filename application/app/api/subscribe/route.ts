@@ -18,7 +18,10 @@ export async function POST(req: NextRequest) {
 	}
 	const resend = new Resend(process.env.RESEND_API_KEY);
 	if (!fromEmail || !audienceId || !siteUrl) {
-		throw new Error("Missing Email address, audienceId and siteUrl");
+		return NextResponse.json(
+			{ error: "Missing Email address, audienceId and siteUrl" },
+			{ status: 500 },
+		);
 	}
 	const body = await req.json();
 	try {
