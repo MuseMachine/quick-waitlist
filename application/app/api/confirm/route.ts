@@ -63,7 +63,7 @@ export async function GET(request: Request) {
 			return NextResponse.json({ resErrorMessage });
 		}
 	} catch (error) {
-		return NextResponse.json({ error });
+		return NextResponse.json({ error }, { status: 500 });
 	}
 
 	return NextResponse.json({ message: "Email confirmed successfully" });
