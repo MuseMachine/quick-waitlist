@@ -32,7 +32,6 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as HTMLFormElement;
-    console.log("target", target);
     const form = new FormData(target);
     const email = form.get("email");
     const name = form.get("name") as string;
@@ -47,7 +46,6 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
 
     startTransaction(async () => {
       try {
-        console.log("Sending data");
         const res = await fetch("/api/subscribe", {
           method: "POST",
           body: JSON.stringify({ firstName, lastName, email }),
@@ -57,7 +55,6 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
         if (res.ok) {
           target.reset();
           toast.success("Thank you for subscribing 🎉");
-          console.log(await res.json());
         } else {
           console.error("Error:", res.status, res.statusText);
           toast.error("Something went wrong");

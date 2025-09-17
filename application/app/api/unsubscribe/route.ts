@@ -3,9 +3,12 @@ import { Resend } from "resend";
 import { decrypt } from "@/app/lib/crypto"; // Deine Krypto-Funktionen
 
 const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
-const audienceId = process.env.NEXT_PUBLIC_AUDIENCE_ID;
+const audienceId = process.env.NEXT_PUBLIC_AUDIENCE_ID || undefined;
 
 export async function GET(request: NextRequest) {
+	if (!audienceId) {
+		throw new Error("Mising audienceId");
+	}
 	const searchParams = request.nextUrl.searchParams;
 	const token = searchParams.get("token");
 
