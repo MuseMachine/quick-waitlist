@@ -3,12 +3,12 @@ import { Resend } from "resend";
 import { decrypt, encrypt } from "@/app/lib/crypto";
 import { WelcomeEmail } from "@/emails/WelcomeEmail";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const fromEmail = process.env.FROM_EMAIL || undefined; // needed! Else e-mail won't be send
 const audienceId = process.env.AUDIENCE_ID || undefined;
 const siteUrl = process.env.NEXT_PUBLIC_DOMAIN || undefined;
 
 export async function GET(request: Request) {
+	const resend = new Resend(process.env.RESEND_API_KEY);
 	if (!fromEmail || !audienceId || !siteUrl) {
 		throw new Error("Missing Email address, audienceId and siteUrl");
 	}

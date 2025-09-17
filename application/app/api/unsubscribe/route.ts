@@ -2,10 +2,10 @@ import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { decrypt } from "@/app/lib/crypto"; // Deine Krypto-Funktionen
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const audienceId = process.env.AUDIENCE_ID || undefined;
 
 export async function GET(request: NextRequest) {
+	const resend = new Resend(process.env.RESEND_API_KEY);
 	if (!audienceId) {
 		throw new Error("Mising audienceId");
 	}
