@@ -9,6 +9,13 @@ const siteUrl = process.env.NEXT_PUBLIC_DOMAIN || undefined;
 const subject = "Confirm your subscription";
 
 export async function POST(req: NextRequest) {
+	const apiKey = process.env.RESEND_API_KEY || undefined;
+	if (!apiKey) {
+		return NextResponse.json({ error: "No API KEY" }, { status: 500 });
+	}
+	if (!audienceId) {
+		return NextResponse.json({ error: "No audience id" }, { status: 500 });
+	}
 	const resend = new Resend(process.env.RESEND_API_KEY);
 	if (!fromEmail || !audienceId || !siteUrl) {
 		throw new Error("Missing Email address, audienceId and siteUrl");

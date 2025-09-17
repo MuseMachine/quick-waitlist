@@ -1,11 +1,11 @@
 import crypto from "node:crypto";
 
 const algorithm = "aes-256-cbc";
-const secretPassphrase = process.env.PASSPHRASE || "";
 
 // Errors are due to typescript types not matching correctly with the node:crypto package.
 // Ignore them. It works in runtime.
 export function encrypt(text: string): string {
+	const secretPassphrase = process.env.PASSPHRASE || undefined;
 	if (!secretPassphrase) {
 		throw new Error("Missing ENCRYPTION_KEY");
 	}
@@ -19,6 +19,7 @@ export function encrypt(text: string): string {
 }
 
 export function decrypt(text: string): string {
+	const secretPassphrase = process.env.PASSPHRASE || undefined;
 	if (!secretPassphrase) {
 		throw new Error("Missing ENCRYPTION_KEY");
 	}
