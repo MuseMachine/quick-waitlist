@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const CardFooter = () => {
   return (
-    <div className="pt-4 space-y-2">
+    <div className="mt-4 pt-4 space-y-2">
       <div className="text-[#B1ACA4] text-[12px]">
         {" "}
         <Link
