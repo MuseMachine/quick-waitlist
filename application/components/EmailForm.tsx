@@ -22,13 +22,6 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
     }, 1000); // Reset after 1 second
   };
 
-  function getDaysLeft(): number {
-    const endDate = new Date(date); // Set your target date here
-    const today = new Date();
-    const diffTime = endDate.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return Math.max(0, diffDays);
-  }
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as HTMLFormElement;
@@ -65,61 +58,46 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
     });
   };
   return (
-    <div className="p-5 space-y-8 flex flex-col justify-center">
-      <div className="space-y-3">
-        {/* <div className="text-orange-500 font-medium">Limited Time Offer</div> */}
-        <span
-          suppressHydrationWarning={true}
-          className="text-green-600 bg-green-100 px-2 py-1 rounded-full text-sm items-center flex gap-1 w-fit"
-        >
-          <Hourglass size={14} strokeWidth={2} aria-hidden="true" />
-          {getDaysLeft()} days left
-        </span>
-        <h1 className="md:text-4xl text-3xl leading-tight font-semibold">
-          {title}
-        </h1>
-      </div>
+    <div className="py-5 space-y-8 flex flex-col justify-center">
 
       <form onSubmit={(e) => handleSubmit(e)} className="space-y-5">
         <div>
-          <Label htmlFor="input-10">Full Name</Label>
           <div className="relative">
             <Input
               type="text"
               name="name"
               id={nameId}
               required
-              placeholder="John Doe"
-              className="rounded-full"
+              placeholder="Full name"
+              className="rounded-full placeholder:text-[#CFCFCF] text-[#F5F5F5]"
             />
           </div>
         </div>
         <div>
-          <Label htmlFor="input-10">Email address</Label>
           <div className="relative">
             <Input
               type="email"
               name="email"
               id={emailId}
               required
-              placeholder="John.Doe@musemachine.de"
-              className="rounded-full"
+              placeholder="Your email address"
+              className="rounded-full placeholder:text-[#CFCFCF] text-[#F5F5F5] focus:boder-red-500"
             />
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 px-4">
           <Input
             name="checkbox"
             id={checkboxId}
             type="checkbox"
-            className="size-3 content-between"
+            className="relative size-4 content-between top-0.5 flex-shrink-0"
             required
           />
-          <Label>
+          <Label className="leading-5">
             I&apos;ve read the{" "}
             <a
               href="https://musemachine.ai/en/privacy-policy"
-              className="underline"
+              className="underline hover:no-underline"
             >
               privacy policy&nbsp;
             </a>
@@ -134,7 +112,7 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
           type="submit"
           className="group relative disabled:opacity-100 w-full rounded-full"
         >
-          <span className="group-data-[loading=true]:text-transparent text-black font-bold">
+          <span className="group-data-[loading=true]:text-transparent text-black text-lg font-medium">
             Join the waitlist
           </span>
           {isPending && (

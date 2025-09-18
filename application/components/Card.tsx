@@ -7,7 +7,7 @@ const Card = ({
   className?: string;
 }) => {
   return (
-    <div className="max-w-screen-lg w-full mx-auto relative">{children}</div>
+    <div className="relative max-w-[500px] w-full mx-auto">{children}</div>
   );
 };
 
