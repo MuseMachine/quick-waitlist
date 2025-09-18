@@ -32,13 +32,13 @@ export default function Home() {
   return (
     <div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <div className="w-1/3 h-25 mx-auto object-contain mb-11 text-[#0FFEC5]">
+      <div className="w-1/3 max-sm:w-1/2 max-sm:my-8 h-auto mx-auto object-contain mb-11 text-[#0FFEC5]">
         <MMLogo />
       </div>
       <Card>
         <div>
           <div className="flex flex-col items-center justify-center">
-            <h1 className="md:text-4xl text-3xl leading-normal text-center font-semibold tracking-wide mb-8">
+            <h1 className="md:text-4xl text-2xl leading-normal text-center font-semibold tracking-wide mb-8">
               {title}
             </h1>
             <span
@@ -56,7 +56,7 @@ export default function Home() {
           </div>
       </Card>
       <div className="pt-4">
-        <div className="w-1/4 h-25 mx-auto object-contain mt-8">
+        <div className="w-1/4 h-auto mx-auto object-contain max-sm:mt-0 mt-8">
           <div className="flex gap-4 justify-center">
             <Link
               href={LinkedinLink}
