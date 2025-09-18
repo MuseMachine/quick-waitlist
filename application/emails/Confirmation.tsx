@@ -24,7 +24,7 @@ export const EmailConfirmation = (confirmationLink: string) => {
               Please click{" "}
               <a style={anchor} href={confirmationLink}>
                 here
-              </a>
+              </a>{" "}
               to confirm your subscription
             </Text>
           </Section>

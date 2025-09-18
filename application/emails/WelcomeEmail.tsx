@@ -66,7 +66,7 @@ export const WelcomeEmail = (unsubscribeLink: string) => {
             </Text>
             <Hr style={hr} />
             <Text style={unsubscribeText}>
-              You are receiving this email because you opted in via our
+              You are receiving this email because you opted in via our{" "}
               <a style={anchor} href={waitlistpage}>
                 waitlist
               </a>
