@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { encrypt } from "@/app/lib/crypto";
+import { fail } from "@/app/lib/errors";
 import { EmailConfirmation } from "@/emails/Confirmation";
 
 const fromEmail = process.env.FROM_EMAIL || undefined; // needed! Else e-mail won't be send
@@ -11,17 +12,11 @@ const subject = "Confirm your subscription";
 export async function POST(req: NextRequest) {
 	const apiKey = process.env.RESEND_API_KEY || undefined;
 	if (!apiKey) {
-		return NextResponse.json({ error: "No API KEY" }, { status: 500 });
-	}
-	if (!audienceId) {
-		return NextResponse.json({ error: "No audience id" }, { status: 500 });
+		return fail("ENVIRONMENT_VARS");
 	}
 	const resend = new Resend(process.env.RESEND_API_KEY);
 	if (!fromEmail || !audienceId || !siteUrl) {
-		return NextResponse.json(
-			{ error: "Missing Email address, audienceId and siteUrl" },
-			{ status: 500 },
-		);
+		return fail("ENVIRONMENT_VARS");
 	}
 	const body = await req.json();
 	try {
@@ -33,16 +28,7 @@ export async function POST(req: NextRequest) {
 			token = encrypt(tokenData);
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				return NextResponse.json(
-					{
-						error: {
-							message: error.message,
-							name: error.name,
-						},
-						code: 1,
-					},
-					{ status: 500 },
-				);
+				return fail("ENCRYPTION_ERROR");
 			}
 		}
 
@@ -67,10 +53,7 @@ export async function POST(req: NextRequest) {
 			sendEmail,
 			addContact,
 		});
-	} catch (error) {
-		return NextResponse.json(
-			{ error: "Errorcode: 5", errormessage: error },
-			{ status: 500 },
-		);
+	} catch {
+		return fail("INTERNAL_ERROR");
 	}
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { decrypt, encrypt } from "@/app/lib/crypto";
+import { AppError, fail } from "@/app/lib/errors";
 import { WelcomeEmail } from "@/emails/WelcomeEmail";
 
 const fromEmail = process.env.FROM_EMAIL || undefined; // needed! Else e-mail won't be send
@@ -10,13 +11,15 @@ const siteUrl = process.env.NEXT_PUBLIC_DOMAIN || undefined;
 export async function GET(request: Request) {
 	const resend = new Resend(process.env.RESEND_API_KEY);
 	if (!fromEmail || !audienceId || !siteUrl) {
-		throw new Error("Missing Email address, audienceId and siteUrl");
+		return fail("ENVIRONMENT_VARS");
 	}
 	const { searchParams } = new URL(request.url);
 	const token = searchParams.get("token");
 
 	if (!token) {
-		return NextResponse.json({ error: "Token is required" }, { status: 400 });
+		return NextResponse.json(
+			new AppError("BAD_REQUEST", { message: "Token is required" }).toJSON(),
+		);
 	}
 
 	const decryptedToken = decrypt(token);
@@ -26,14 +29,10 @@ export async function GET(request: Request) {
 	const deci = 10;
 	const tokenAge = Date.now() - Number.parseInt(timestamp, deci);
 	if (tokenAge > 24 * 60 * 60 * 1000) {
-		return NextResponse.json({ error: "Token has expired" }, { status: 400 });
+		return NextResponse.json(
+			new AppError("BAD_REQUEST", { message: "Token has expired" }).toJSON(),
+		);
 	}
-
-	// // Check if user is already confirmed
-	// await resend.contacts.get({
-	// 	email,
-	// 	audienceId,
-	// });
 
 	try {
 		// Update user status in Resend audience to subscribed using the email
@@ -59,11 +58,10 @@ export async function GET(request: Request) {
 			react: WelcomeEmail(unsubscribeLink),
 		});
 		if (sendEmail.error !== null) {
-			const resErrorMessage = sendEmail.error.message;
-			return NextResponse.json({ resErrorMessage });
+			return NextResponse.json(new AppError("RESEND_SEND_EMAIL").toJSON());
 		}
-	} catch (error) {
-		return NextResponse.json({ error }, { status: 500 });
+	} catch {
+		return NextResponse.json(new AppError("INTERNAL_ERROR").toJSON());
 	}
 
 	return NextResponse.json({ message: "Email confirmed successfully" });

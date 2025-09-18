@@ -20,6 +20,7 @@ export default function ConfirmationUI() {
       );
 
       if (!response.ok || response.status !== 200) {
+        console.log(await response.json());
         return setMessage("An error occurred during confirmation");
       }
 

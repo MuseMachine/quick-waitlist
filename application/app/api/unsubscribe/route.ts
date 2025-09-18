@@ -1,27 +1,44 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { decrypt } from "@/app/lib/crypto"; // Deine Krypto-Funktionen
+import { AppError, fail } from "@/app/lib/errors";
 
 const audienceId = process.env.AUDIENCE_ID || undefined;
 
 export async function GET(request: NextRequest) {
 	const resend = new Resend(process.env.RESEND_API_KEY);
 	if (!audienceId) {
-		throw new Error("Mising audienceId");
+		return fail("ENVIRONMENT_VARS");
 	}
 	const searchParams = request.nextUrl.searchParams;
 	const token = searchParams.get("token");
 
 	if (!token) {
-		return NextResponse.json({ error: "Missing token." }, { status: 400 });
+		return NextResponse.json(
+			new AppError("BAD_REQUEST", { message: "Token is required" }).toJSON(),
+		);
 	}
 
 	try {
 		const decryptedData = decrypt(token);
-		const email = decryptedData;
+		let email = "";
+		try {
+			email = decryptedData;
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				return NextResponse.json(
+					{
+						code: 3,
+					},
+					{ status: 500 },
+				);
+			}
+		}
 
 		if (!email) {
-			throw new Error("Invalid token payload.");
+			return NextResponse.json(
+				new AppError("BAD_REQUEST", { message: "Token is invalid" }).toJSON(),
+			);
 		}
 
 		const deleteUser = await resend.contacts.remove({
@@ -33,20 +50,16 @@ export async function GET(request: NextRequest) {
 			if (deleteUser.error.name === "not_found") {
 				return NextResponse.json({ message: "You have been unsubscribed." });
 			}
-			throw new Error(
-				"Unsubscribe was not successfull, with the message: " +
-					deleteUser.error.message,
-			);
+			return NextResponse.json(new AppError("RESEND_AUDIENCE").toJSON());
 		}
 		return NextResponse.json({
 			message: "You have been unsubscribed.",
 		});
-	} catch (error) {
-		console.error("Unsubscribe error:", error);
-		// Gib eine generische Fehlermeldung aus, um keine Systemdetails preiszugeben.
+	} catch {
 		return NextResponse.json(
-			{ error: "Invalid or expired link." },
-			{ status: 400 },
+			new AppError("BAD_REQUEST", {
+				message: "Invalid or expired link.",
+			}).toJSON(),
 		);
 	}
 }

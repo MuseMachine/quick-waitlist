@@ -34,6 +34,10 @@ export function decrypt(text: string): string {
 	const key = crypto.scryptSync(secretPassphrase, salt, 32);
 	const decipher = crypto.createDecipheriv(algorithm, key, iv);
 	let decrypted = decipher.update(encryptedHex, "hex", "utf8");
-	decrypted += decipher.final("utf8");
+	try {
+		decrypted += decipher.final("utf8");
+	} catch {
+		return "";
+	}
 	return decrypted;
 }
