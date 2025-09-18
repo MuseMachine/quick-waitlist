@@ -27,7 +27,18 @@ export async function POST(req: NextRequest) {
 	try {
 		// Generate a token with encrypted email and timestamp
 		const tokenData = `${body.email}:${Date.now()}`;
-		const token = encrypt(tokenData);
+
+		let token = "";
+		try {
+			token = encrypt(tokenData);
+		} catch {
+			return NextResponse.json(
+				{
+					error: "Errorcode: 1",
+				},
+				{ status: 500 },
+			);
+		}
 
 		const confirmationLink = `${siteUrl}/confirm?token=${encodeURIComponent(token)}`;
 
@@ -52,7 +63,7 @@ export async function POST(req: NextRequest) {
 		});
 	} catch (error) {
 		return NextResponse.json(
-			{ error: "Something went wrong. Sorry!" },
+			{ error: "Errorcode: 5", errormessage: error },
 			{ status: 500 },
 		);
 	}
