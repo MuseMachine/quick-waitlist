@@ -99,9 +99,9 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
               href="https://musemachine.ai/en/privacy-policy"
               className="underline hover:no-underline"
             >
-              privacy policy&nbsp;
+              privacy policy
             </a>
-            and agree that my email address will be stored and processed for the
+            &nbsp; and agree that my email address will be stored and processed for the
             purpose of maintaining the waiting list.
           </Label>
         </div>
