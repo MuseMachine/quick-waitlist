@@ -31,13 +31,19 @@ export async function POST(req: NextRequest) {
 		let token = "";
 		try {
 			token = encrypt(tokenData);
-		} catch {
-			return NextResponse.json(
-				{
-					error: "Errorcode: 1",
-				},
-				{ status: 500 },
-			);
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				return NextResponse.json(
+					{
+						error: {
+							message: error.message,
+							name: error.name,
+						},
+						code: 1,
+					},
+					{ status: 500 },
+				);
+			}
 		}
 
 		const confirmationLink = `${siteUrl}/confirm?token=${encodeURIComponent(token)}`;

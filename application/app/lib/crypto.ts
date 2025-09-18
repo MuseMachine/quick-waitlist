@@ -4,6 +4,11 @@ const algorithm = "aes-256-cbc";
 
 // Errors are due to typescript types not matching correctly with the node:crypto package.
 // Ignore them. It works in runtime.
+/**
+ * Takes the text and encrypts it, return the encrypted text. Errors if the passphrase is missing in the environment variables.
+ * @param text
+ * @returns string | Error
+ */
 export function encrypt(text: string): string {
 	const secretPassphrase = process.env.PASSPHRASE || undefined;
 	if (!secretPassphrase) {
