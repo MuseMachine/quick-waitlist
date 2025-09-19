@@ -6,7 +6,7 @@ const CardHeader = ({ features }: { title: string; features: string }) => {
       <div className="space-y-6 pb-5">
         <div className="mt-8">
           {features.split(",").map((feature) => (
-            <div key={feature} className="flex items-center justify-center gap-3 text-2xl max-sm:text-lg mb-3">
+            <div key={feature} className="flex items-center justify-center md:justify-start gap-3 text-2xl max-sm:text-lg mb-3">
               <Cog className="w-5 h-5 text-[#0FFEC5]" />
               <span>{feature.trim()}</span>
             </div>

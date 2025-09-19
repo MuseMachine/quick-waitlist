@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${dmSans.className}`}>
-        <main className="flex justify-center items-center min-h-screen max-sm:px-8">
+        <main className="flex justify-center items-center min-h-screen max-sm:px-8 px-8">
           {children}
         </main>
         <Toaster />
