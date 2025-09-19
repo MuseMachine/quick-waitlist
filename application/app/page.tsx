@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <div className="w-1/3 max-sm:w-1/2 max-sm:my-8 h-auto mx-auto object-contain mb-11 text-[#0FFEC5]">
+      <div className="w-1/3 max-sm:w-1/2 max-sm:my-8 h-auto mx-auto object-contain max-sm:mb-11 mb-14 text-[#0FFEC5]">
         <MMLogo />
       </div>
         <Card>
