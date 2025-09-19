@@ -58,7 +58,10 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
     });
   };
   return (
-    <div className="py-5 space-y-8 flex flex-col justify-center">
+    <div className="py-5 space-y-8 flex flex-col justify-center border border-white rounded-2xl p-8 self-center bg-white/10">
+      <p>
+        MuseBoard is coming soon — and you can be among the very first to try it. The future of creative image generation starts here, and the countdown has already begun. Join the Waitlist today and secure your early access before the public launch.
+      </p>
 
       <form onSubmit={(e) => handleSubmit(e)} className="space-y-5">
         <div>

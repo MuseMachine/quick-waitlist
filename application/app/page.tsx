@@ -32,29 +32,29 @@ export default function Home() {
   return (
     <div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <div className="w-1/3 max-sm:w-1/2 max-sm:my-8 h-auto mx-auto object-contain mb-11 text-[#0FFEC5]">
+      <div className="w-1/3 max-sm:w-1/2 max-sm:my-8 h-auto mx-auto object-contain max-sm:mb-11 mb-14 text-[#0FFEC5]">
         <MMLogo />
       </div>
-      <Card>
-        <div>
-          <div className="flex flex-col items-center justify-center">
-            <h1 className="md:text-4xl text-2xl leading-normal text-center font-semibold tracking-wide mb-8">
-              {title}
-            </h1>
-            <span
-              suppressHydrationWarning={true}
-              className="text-[#06664F] bg-[#6FFEDC] px-4 py-1 rounded-full text-sm items-center flex gap-1 w-fit"
-            >
-              <Hourglass size={14} strokeWidth={2} aria-hidden="true" />
-              {getDaysLeft()} days left
-            </span>
-          </div>
-          <CardHeader title={description} features={features} />
-        </div>
-          <div className="md:order-2 order-1">
+        <Card>
+          <div className="md:grid md:grid-cols-2 gap-10">
+            <div className="self-center max-[880px]:self-start">
+              <div className="flex flex-col items-center justify-center md:items-start">
+                <h1 className="md:text-4xl text-2xl leading-normal text-center md:text-left font-semibold tracking-wide mb-8">
+                  {title}
+                </h1>
+                <span
+                  suppressHydrationWarning={true}
+                  className="text-[#06664F] bg-[#6FFEDC] px-4 py-1 rounded-full text-sm items-center flex gap-1 w-fit"
+                >
+                  <Hourglass size={14} strokeWidth={2} aria-hidden="true" />
+                  {getDaysLeft()} days left
+                </span>
+              </div>
+              <CardHeader title={description} features={features} />
+            </div>
             <EmailForm date={date} title={title} />
           </div>
-      </Card>
+        </Card>
       <div className="pt-4">
         <div className="w-1/4 h-auto mx-auto object-contain max-sm:mt-0 mt-8">
           <div className="flex gap-4 justify-center">
