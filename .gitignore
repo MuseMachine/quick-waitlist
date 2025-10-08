@@ -80,3 +80,6 @@ override.tf.json
 terraform.rc
 
 generate-secret.js
+
+#Kiro
+.kiro

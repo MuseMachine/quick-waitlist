@@ -1,8 +1,9 @@
 "use client";
-import { Hourglass, LoaderCircle } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import type React from "react";
 import { useId, useState, useTransition } from "react";
 import toast from "react-hot-toast";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,14 +13,21 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
   const emailId = useId();
   const checkboxId = useId();
   const [isPending, startTransaction] = useTransition();
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const handleClick = () => {
-    setIsLoading(true);
-    // Simulate an async operation
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000); // Reset after 1 second
+
+
+  const handleTurnstileSuccess = (token: string) => {
+    setTurnstileToken(token);
+  };
+
+  const handleTurnstileError = () => {
+    setTurnstileToken("");
+    toast.error("Verification failed. Please try again");
+  };
+
+  const handleTurnstileExpire = () => {
+    setTurnstileToken("");
   };
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
@@ -33,6 +41,12 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
       return null;
     }
 
+    // Validate Turnstile token presence before submission
+    if (!turnstileToken) {
+      toast.error("Please complete the verification to continue");
+      return;
+    }
+
     // Split full name into first and last name
     const [firstName, ...lastNameParts] = name.trim().split(" ");
     const lastName = lastNameParts.join(" ") || ""; // Join remaining parts or empty string
@@ -41,19 +55,32 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
       try {
         const res = await fetch("/api/subscribe", {
           method: "POST",
-          body: JSON.stringify({ firstName, lastName, email }),
+          body: JSON.stringify({ firstName, lastName, email, turnstileToken }),
           headers: { "Content-Type": "application/json" },
         });
 
         if (res.ok) {
           target.reset();
+          setTurnstileToken(""); // Reset token after successful submission
           toast.success("Thank you for subscribing 🎉");
         } else {
+          // Handle API errors related to Turnstile verification
+          const errorData = await res.json().catch(() => ({}));
           console.error("Error:", res.status, res.statusText);
-          toast.error("Something went wrong");
+          
+          // Check if it's a Turnstile verification error
+          if (res.status === 400 && errorData.code === 4010) {
+            toast.error("Bot verification failed. Please refresh and try again");
+            setTurnstileToken(""); // Reset token on verification failure
+          } else {
+            toast.error("Something went wrong");
+            setTurnstileToken(""); // Reset token on other errors
+          }
         }
       } catch (error) {
         console.error("Fetch error:", error);
+        setTurnstileToken(""); // Reset token on network errors
+        toast.error("Something went wrong");
       }
     });
   };
@@ -109,7 +136,6 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
           </Label>
         </div>
         <Button
-          onClick={handleClick}
           disabled={isPending}
           data-loading={isPending}
           type="submit"
@@ -129,6 +155,18 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
             </div>
           )}
         </Button>
+        <div className="flex justify-center">
+          <Turnstile
+            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+            onSuccess={handleTurnstileSuccess}
+            onError={handleTurnstileError}
+            onExpire={handleTurnstileExpire}
+            options={{
+              theme: "auto",
+              size: "normal",
+            }}
+          />
+        </div>
       </form>
     </div>
   );

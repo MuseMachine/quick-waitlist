@@ -11,6 +11,7 @@ export const ERROR_DEFS = {
 	RESEND_AUDIENCE: { status: 500, code: 1050 },
 	// examples for non-500 errors:
 	BAD_REQUEST: { status: 400, code: 4000 },
+	TURNSTILE_VERIFICATION_FAILED: { status: 400, code: 4010 },
 	UNAUTHORIZED: { status: 401, code: 4001 },
 	NOT_FOUND: { status: 404, code: 4004 },
 } as const;
