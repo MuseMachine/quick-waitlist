@@ -4,31 +4,31 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ConfirmationUI() {
-  const [message, setMessage] = useState("Confirming your subscription...");
-  const searchParams = useSearchParams();
+	const [message, setMessage] = useState("Confirming your subscription...");
+	const searchParams = useSearchParams();
 
-  useEffect(() => {
-    const confirmEmail = async () => {
-      const token = searchParams.get("token");
-      if (!token) {
-        setMessage("Invalid confirmation link");
-        return;
-      }
+	useEffect(() => {
+		const confirmEmail = async () => {
+			const token = searchParams.get("token");
+			if (!token) {
+				setMessage("Invalid confirmation link");
+				return;
+			}
 
-      const response = await fetch(
-        `/api/confirm?token=${encodeURIComponent(token)}`,
-      );
+			const response = await fetch(
+				`/api/confirm?token=${encodeURIComponent(token)}`,
+			);
 
-      if (!response.ok || response.status !== 200) {
-        console.log(await response.json());
-        return setMessage("An error occurred during confirmation");
-      }
+			if (!response.ok || response.status !== 200) {
+				console.log(await response.json());
+				return setMessage("An error occurred during confirmation");
+			}
 
-      setMessage("Email confirmed successfully! You are now subscribed.");
-    };
+			setMessage("Email confirmed successfully! You are now subscribed.");
+		};
 
-    confirmEmail();
-  }, [searchParams]);
+		confirmEmail();
+	}, [searchParams]);
 
-  return <p>{message}</p>;
+	return <p>{message}</p>;
 }
