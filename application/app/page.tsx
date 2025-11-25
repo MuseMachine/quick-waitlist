@@ -77,14 +77,14 @@ export default function Home() {
 				<div className="flex gap-2 text-white text-[12px] h-25 mx-auto object-contain justify-center mt-6">
 					{" "}
 					<Link
-						href="https://musemachine.ai/en/legal-disclosure"
+						href="https://musemachine.ai/legal/legal-disclosure"
 						target="_blank"
 						className="underline transition-all duration-200 hover:no-underline"
 					>
 						Legal Disclosure
 					</Link>{" "}
 					<Link
-						href="https://musemachine.ai/en/privacy-policy"
+						href="https://musemachine.ai/legal/privacy-policy"
 						target="_blank"
 						className="underline transition-all duration-200 hover:no-underline"
 					>
