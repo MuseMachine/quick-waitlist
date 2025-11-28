@@ -5,6 +5,7 @@ import Card from "@/components/Card";
 import EmailForm from "@/components/EmailForm";
 import MMLogo from "@/components/Logo";
 import CardHeader from "@/components/Offer";
+import Background from "@/components/Background";
 
 const LinkedinLink =
 	process.env.NEXT_PUBLIC_LINKEDIN || "https://www.linkedin.com/";
@@ -31,7 +32,7 @@ export default function Home() {
 
 	return (
 		<div>
-			{/* eslint-disable-next-line @next/next/no-img-element */}
+			<Background />
 			<div className="w-1/3 max-sm:w-1/2 max-sm:my-8 h-auto mx-auto object-contain max-sm:mb-11 mb-14 text-[#0FFEC5]">
 				<MMLogo />
 			</div>
