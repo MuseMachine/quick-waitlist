@@ -15,7 +15,7 @@ export default function Home() {
 	// Data from env
 	const features =
 		process.env.NEXT_PUBLIC_FEATURES ||
-		"Text to 9 Images, Adjustable Creativity, Colour Input, Image Style";
+		"Multiple Image Creation with One Prompt, Text to 9 Images, Adjustable Creativity, Colour Input, Image Style";
 	const date = process.env.NEXT_PUBLIC_LAUNCH_DATE || "2025-12-15";
 	const title =
 		process.env.NEXT_PUBLIC_TITLE ||
