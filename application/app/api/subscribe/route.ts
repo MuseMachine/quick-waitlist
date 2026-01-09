@@ -26,11 +26,8 @@ interface TurnstileVerifyResponse {
 }
 
 export async function POST(req: NextRequest) {
-	console.log("Subscribe API called");
-
 	const apiKey = process.env.RESEND_API_KEY || undefined;
 	if (!apiKey) {
-		console.log("Missing Resend API key");
 		return fail("ENVIRONMENT_VARS");
 	}
 
@@ -47,19 +44,16 @@ export async function POST(req: NextRequest) {
 
 	// Validate Turnstile token presence
 	if (!body.turnstileToken) {
-		console.log("Turnstile token is missing in the request");
 		return fail("BAD_REQUEST");
 	}
 
 	// Verify Turnstile token with Cloudflare
 	const turnstileSecretKey = process.env.TURNSTILE_SECRET_KEY;
 	if (!turnstileSecretKey) {
-		console.log("Turnstile secret key is missing");
 		return fail("ENVIRONMENT_VARS");
 	}
 
 	try {
-		console.log("Verifying Turnstile token with Cloudflare");
 		const verifyResponse = await fetch(
 			"https://challenges.cloudflare.com/turnstile/v0/siteverify",
 			{
@@ -75,7 +69,6 @@ export async function POST(req: NextRequest) {
 		);
 
 		const verifyResult: TurnstileVerifyResponse = await verifyResponse.json();
-		console.log("Turnstile verification result:", { verifyResult });
 
 		if (!verifyResult.success) {
 			console.log("Turnstile verification failed", {
@@ -85,7 +78,9 @@ export async function POST(req: NextRequest) {
 		}
 	} catch (error: unknown) {
 		console.log("Turnstile verification API call failed", { error });
-		return fail("INTERNAL_ERROR", { cause: error });
+		return fail("INTERNAL_ERROR", {
+			cause: "Calling challenges failed with:" + error,
+		});
 	}
 
 	try {
