@@ -78,15 +78,13 @@ export async function POST(req: NextRequest) {
 		}
 	} catch (error: unknown) {
 		console.log("Turnstile verification API call failed", { error });
-		return fail("INTERNAL_ERROR", {
-			cause: "Calling challenges failed with:" + error,
-		});
+		return fail("INTERNAL_ERROR");
 	}
-
+	let log = "";
 	try {
 		// Generate a token with encrypted email and timestamp
 		const tokenData = `${body.email}:${Date.now()}`;
-		console.log("Generating token for email:", { email: body.email });
+		log = "Generating token for email:" + { email: body.email };
 
 		let token = "";
 		try {
@@ -99,7 +97,7 @@ export async function POST(req: NextRequest) {
 		}
 
 		const confirmationLink = `${siteUrl}/confirm?token=${encodeURIComponent(token)}`;
-		console.log("Confirmation link generated:", { confirmationLink });
+		log += "\n" + "Confirmation link generated:" + confirmationLink;
 
 		const sendEmail = await resend.emails.send({
 			from: fromEmail as string,
@@ -107,7 +105,7 @@ export async function POST(req: NextRequest) {
 			subject: subject,
 			react: EmailConfirmation(confirmationLink),
 		});
-		console.log("Email sent successfully", { email: body.email });
+		log += "\n" + "Email sent successfully";
 
 		const addContact = await resend.contacts.create({
 			email: body.email,
@@ -116,7 +114,7 @@ export async function POST(req: NextRequest) {
 			unsubscribed: true,
 			audienceId: audienceId as string,
 		});
-		console.log("Contact added to audience", { email: body.email });
+		log += "\n" + "Contact added to audience";
 
 		return NextResponse.json({
 			sendEmail,
@@ -124,6 +122,6 @@ export async function POST(req: NextRequest) {
 		});
 	} catch (error) {
 		console.log("Failed to send email or add contact", { error });
-		return fail("INTERNAL_ERROR", { cause: "Something else failed." });
+		return fail("INTERNAL_ERROR", { cause: log });
 	}
 }
