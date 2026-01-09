@@ -56,6 +56,7 @@ export class AppError extends Error {
 				...(this.status === 500
 					? { code: this.code }
 					: { message: this.message }),
+				...{ cause: this.cause },
 			},
 			timestamp: new Date().toISOString(),
 			...(this.requestId ? { requestId: this.requestId } : {}),
