@@ -100,7 +100,7 @@ export async function POST(req: NextRequest) {
 			from: fromEmail as string,
 			to: [body.email],
 			subject: subject,
-			react: `<div><h1>Confirm your subscription</h1><a href="${confirmationLink}">Click here to confirm</a></div>`,
+			html: `<div><h1>Confirm your subscription</h1><a href="${confirmationLink}">Click here to confirm</a></div>`,
 			// react: EmailConfirmation(confirmationLink),
 		});
 		const addContact = await resend.contacts.create({
