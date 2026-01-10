@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { renderToString } from "react-dom/server";
 import { Resend } from "resend";
 import { decrypt, encrypt } from "@/app/lib/crypto";
 import { AppError, fail } from "@/app/lib/errors";
@@ -52,12 +51,73 @@ export async function GET(request: Request) {
 		// GDPR (conditions for consent and right to object)
 		const token = encrypt(email);
 		const unsubscribeLink = `${siteUrl}/unsubscribe?token=${encodeURIComponent(token)}`;
-		const preRenderHtml = renderToString(WelcomeEmail(unsubscribeLink));
 		const sendEmail = await resend.emails.send({
 			from: fromEmail as string,
 			to: email,
 			subject: "Welcome",
-			html: preRenderHtml,
+			html: `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>You've secured your spot! Get ready for MuseBoard.</title>
+    </head>
+    <body style="background-color: #f6f9fc; padding: 10px 0;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border: 1px solid #f0f0f0; padding: 45px;">
+            <tr>
+                <td align="center">
+                    <img src="https://waitlist.musemachine.ai/mm_logo.svg" width="200" height="50" alt="Logo" style="padding-top: 40px; margin: 0 auto;">
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <h1 style="font-size: 28px; font-weight: bold; color: #1a1a1a; margin: 30px 0;">You're officially on the list! 🎉</h1>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p style="font-size: 16px; font-family: 'Open Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-weight: 400; color: #404040; line-height: 26px;">
+                        Thank you for signing up for the waitlist for our prototype, <strong>MuseBoard</strong>. We're genuinely excited to have you among the first to experience what we're building.
+                    </p>
+                    <p style="font-size: 16px; font-family: 'Open Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-weight: 400; color: #404040; line-height: 26px;">
+                        As you know, staying updated in the creative AI space can be overwhelming. We're crafting a tool to solve exactly that, and your early feedback will be invaluable in shaping a product that truly makes a difference. You're not just a user on a list; you're a co-creator.
+                    </p>
+                    <hr style="border-color: #cccccc; margin: 20px 0;">
+                    <p style="font-size: 16px; font-family: 'Open Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-weight: bold; color: #000; line-height: 26px;">
+                        So, what happens next?
+                    </p>
+                    <p style="font-size: 16px; font-family: 'Open Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-weight: 400; color: #404040; line-height: 26px;">
+                        We're putting the final touches on the prototype right now. As soon as it's ready, you will receive an exclusive invitation to be one of the very first to take it for a spin.
+                    </p>
+                    <p style="font-size: 16px; font-family: 'Open Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-weight: 400; color: #404040; line-height: 26px;">
+                        <strong>
+                            To ensure your invitation doesn't get lost, please add <a href="mailto:info@updates.musemachine.ai">info@updates.musemachine.ai</a> to your contacts.
+                        </strong> This is the best way to make sure our updates land safely in your main inbox.
+                    </p>
+                    <hr style="border-color: #cccccc; margin: 20px 0;">
+                    <p style="font-size: 14px;">
+                        You are receiving this email because you opted in via our <a href="https://waitlist.musemachine.ai" style="text-decoration: underline;">waitlist</a>.
+                    </p>
+                    <p style="font-size: 14px;">
+                        Want to change how you receive these emails? <br />
+                        You can <a href="${unsubscribeLink}" style="text-decoration: underline;">unsubscribe from this list</a>.
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <div style="display: flex; justify-content: center; margin-top: 20px;">
+            <table style="display: flex; justify-content: center;">
+                <tr>
+                    <td>
+                        <p>MuseMachine UG・Roehrer Weg 8・71032 Boeblingen Germany</p>
+                        <p style="display: flex; justify-content: center; color: #09cd9f;">www.musemachine.ai</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+    </html>
+  `,
 		});
 		if (sendEmail.error !== null) {
 			return NextResponse.json(new AppError("RESEND_SEND_EMAIL").toJSON());
