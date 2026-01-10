@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
 	try {
 		// Generate a token with encrypted email and timestamp
 		const tokenData = `${body.email}:${Date.now()}`;
-		log = "Generating token for email:" + { email: body.email };
+		log = "\\Generating token for email:" + body.email;
 
 		let token = "";
 		try {
@@ -97,8 +97,11 @@ export async function POST(req: NextRequest) {
 		}
 
 		const confirmationLink = `${siteUrl}/confirm?token=${encodeURIComponent(token)}`;
-		log += "\n" + "Confirmation link generated:" + confirmationLink;
-
+		log += "\\" + "Confirmation link generated";
+		log += "\\ Sending email from:" + fromEmail;
+		log += "\\ With subject:" + subject;
+		log +=
+			"\\ and email body is undefined?" + !EmailConfirmation(confirmationLink);
 		const sendEmail = await resend.emails.send({
 			from: fromEmail as string,
 			to: [body.email],
