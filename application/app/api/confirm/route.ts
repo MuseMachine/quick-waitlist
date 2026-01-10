@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { renderToString } from "react-dom/server";
 import { Resend } from "resend";
 import { decrypt, encrypt } from "@/app/lib/crypto";
 import { AppError, fail } from "@/app/lib/errors";
@@ -51,11 +52,12 @@ export async function GET(request: Request) {
 		// GDPR (conditions for consent and right to object)
 		const token = encrypt(email);
 		const unsubscribeLink = `${siteUrl}/unsubscribe?token=${encodeURIComponent(token)}`;
+		const preRenderHtml = renderToString(WelcomeEmail(unsubscribeLink));
 		const sendEmail = await resend.emails.send({
 			from: fromEmail as string,
 			to: email,
 			subject: "Welcome",
-			react: WelcomeEmail(unsubscribeLink),
+			html: preRenderHtml,
 		});
 		if (sendEmail.error !== null) {
 			return NextResponse.json(new AppError("RESEND_SEND_EMAIL").toJSON());
