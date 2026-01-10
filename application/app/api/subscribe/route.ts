@@ -100,7 +100,8 @@ export async function POST(req: NextRequest) {
 			from: fromEmail as string,
 			to: [body.email],
 			subject: subject,
-			react: EmailConfirmation(confirmationLink),
+			react: `<div><h1>Confirm your subscription</h1><a href="${confirmationLink}">Click here to confirm</a></div>`,
+			// react: EmailConfirmation(confirmationLink),
 		});
 		const addContact = await resend.contacts.create({
 			email: body.email,
@@ -116,6 +117,6 @@ export async function POST(req: NextRequest) {
 		});
 	} catch (error) {
 		console.log("Failed to send email or add contact", { error });
-		return fail("INTERNAL_ERROR", { cause: error });
+		return fail("INTERNAL_ERROR", { cause: String(error) });
 	}
 }
