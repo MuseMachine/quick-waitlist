@@ -1,9 +1,9 @@
 "use client";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { LoaderCircle } from "lucide-react";
 import type React from "react";
 import { useId, useState, useTransition } from "react";
 import toast from "react-hot-toast";
-import { Turnstile } from "@marsidev/react-turnstile";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -64,7 +64,7 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
 				} else {
 					// Handle API errors related to Turnstile verification
 					const errorData = await res.json().catch(() => ({}));
-					console.error("Error:", res.status, res.statusText);
+					console.log("Error:", res.status, res.statusText);
 
 					// Check if it's a Turnstile verification error
 					if (res.status === 400 && errorData.code === 4010) {
@@ -78,7 +78,7 @@ const EmailForm = ({ date, title }: { date: string; title: string }) => {
 					}
 				}
 			} catch (error) {
-				console.error("Fetch error:", error);
+				console.log("Fetch error:", error);
 				setTurnstileToken(""); // Reset token on network errors
 				toast.error("Something went wrong");
 			}

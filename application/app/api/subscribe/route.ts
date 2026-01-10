@@ -125,6 +125,6 @@ export async function POST(req: NextRequest) {
 		});
 	} catch (error) {
 		console.log("Failed to send email or add contact", { error });
-		return fail("INTERNAL_ERROR", { cause: log });
+		return fail("INTERNAL_ERROR", { cause: log + "||" + error });
 	}
 }
