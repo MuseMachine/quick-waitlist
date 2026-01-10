@@ -94,7 +94,12 @@ export async function POST(req: NextRequest) {
 			}
 		}
 
-		const confirmationLink = `${siteUrl}/confirm?token=${encodeURIComponent(token)}`;
+		let confirmationLink = "";
+		if (siteUrl.endsWith("/")) {
+			confirmationLink = `${siteUrl}confirm?token=${encodeURIComponent(token)}`;
+		} else {
+			confirmationLink = `${siteUrl}/confirm?token=${encodeURIComponent(token)}`;
+		}
 
 		const sendEmail = await resend.emails.send({
 			from: fromEmail as string,
